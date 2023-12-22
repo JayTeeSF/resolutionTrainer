@@ -25,7 +25,7 @@ testCases.js: JavaScript file where you write your test cases.
 3. Writing Test Cases:
 
   - Open testCases.js in the test/ directory.
-  - Write test functions for each function in your source code. For example, if you have a function add(a, b) in myCode.js, you can write a test case like this:3. Writing Test Cases:
+  - Write test functions for each function in your source code. For example, if you have a function add(a, b) in myCode.js, you can write a test case like this:
 
 ```
 function test_add(assert) {
