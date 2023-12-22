@@ -6,16 +6,27 @@ function test_subtract(assert) {
 }
 
 function test_changeGameState(assert) {
-  const initial = document.getElementById('personalLevel');
+  const initialStateDiv = document.createElement('div');
+  initialStateDiv.id = 'personalLevel';
+  document.body.appendChild(initialStateDiv);
+
+  const newStateDiv = document.createElement('div');
+  newStateDiv.id = 'communityLevel';
+  document.body.appendChild(newStateDiv);
+
   changeGameState('personalLevel', 'communityLevel');
-  const newCurrent = document.getElementById('communityLevel');
-  assert(!initial.classList.contains('visible') && newCurrent.classList.contains('visible'), `Failed to change game state from personal to community`);
+  
+  assert(!initialStateDiv.classList.contains('visible') && newStateDiv.classList.contains('visible'), `Failed to change game state from personal to community`);
 }
 
 function test_resolveConflict(assert) {
-  const result = resolveConflict('player1', 'Resource Scarcity');
-  // Expected result should be based on game's conflict resolution mechanics
-  assert(result === expectedOutcome, `Unexpected conflict resolution outcome`);
+  const player = 'player1';
+  const conflictType = 'Resource Scarcity';
+  const expectedOutcome = 'resource_allocation'; // Set this based on game logic
+
+  const result = resolveConflict(player, conflictType);
+  
+  assert(result === expectedOutcome, `Expected '${expectedOutcome}', got '${result}'`);
 }
 
 window.testCases = {
