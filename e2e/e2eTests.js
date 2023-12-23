@@ -35,5 +35,7 @@ const E2ETestFramework = {
 
 // Run the tests when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
     E2ETestFramework.runAllTests();
+  }, 1000); // Wait for 1 second before running tests to ensure DOM is fully loaded
 });
