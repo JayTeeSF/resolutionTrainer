@@ -14,9 +14,9 @@
       fetch('../index.html')
         .then(response => response.text())
         .then(htmlContent => {
-          // Correct the relative paths for CSS and JS files
-          let correctedHtml = htmlContent.replace(/src="\.\.\//g, 'src="../');
-            correctedHtml = correctedHtml.replace(/href="\.\.\//g, 'href="../');
+          // Adjust the paths to access resources from the 'src' directory
+          let correctedHtml = htmlContent.replace(/href="src\//g, 'href="../src/');
+            correctedHtml = correctedHtml.replace(/src="src\//g, 'src="../src/');
 
               document.getElementById('test-container').innerHTML = correctedHtml;
 
