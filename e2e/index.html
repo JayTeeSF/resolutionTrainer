@@ -12,12 +12,13 @@
 
     <script>
         fetch('../index.html').then(response => response.text()).then(htmlContent => {
-            const template = htmlContent + '{{{e2eScripts}}}';
-            const renderedHtml = Mustache.render(template, {
-                e2eScripts: '<script src="e2eTests.js"></script>'
-            });
+            // Inject the fetched HTML content
+            document.getElementById('test-container').innerHTML = htmlContent;
 
-            document.getElementById('test-container').innerHTML = renderedHtml;
+            // Dynamically load the E2E test script
+            const e2eScript = document.createElement('script');
+            e2eScript.src = 'e2eTests.js';
+            document.body.appendChild(e2eScript);
         });
     </script>
 </body>
