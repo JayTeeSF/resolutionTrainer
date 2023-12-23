@@ -19,6 +19,12 @@ function test_changeGameState(assert) {
   assert(!initialStateDiv.classList.contains('visible') && newStateDiv.classList.contains('visible'), `Failed to change game state from personal to community`);
 }
 
+function test_gameStateTransition(assert) {
+  changeGameState('personalLevel', 'communityLevel');
+  const isCommunityVisible = document.getElementById('communityLevel').classList.contains('visible');
+  assert(isCommunityVisible, 'Failed to transition from personal to community level');
+}
+
 function test_resolveConflict(assert) {
   const player = 'player1';
   const conflictType = 'Resource Scarcity';
@@ -33,5 +39,6 @@ window.testCases = {
   test_subtract,
   test_changeGameState,
   test_resolveConflict,
+  test_gameStateTransition,
   // other test cases...
 };
