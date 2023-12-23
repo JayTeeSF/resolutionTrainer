@@ -1,41 +1,74 @@
-// e2eTests.js
 const E2ETestFramework = {
-    runTest: function (testName, testFunction) {
-        try {
-            testFunction();
-            console.log(`${testName}: Passed`);
-        } catch (error) {
-            console.error(`${testName}: Failed - ${error.message}`);
+    testCount: 0,
+    passCount: 0,
+    failCount: 0,
+
+    runTests: function (testModule) {
+        console.log('Starting E2E tests...');
+        for (const testName in testModule) {
+            if (testName.startsWith('test_') && typeof testModule[testName] === 'function') {
+                this.testCount++;
+                console.log(`Running test: ${testName}`);
+                try {
+                    testModule[testName](this.assert);
+                    this.passCount++;
+                    console.log(`${testName}: Passed`);
+                } catch (error) {
+                    this.failCount++;
+                    console.error(`${testName}: Failed - ${error}`);
+                }
+            }
         }
+        this.printSummary();
+    },
+
+    assert: function (condition, message) {
+        if (!condition) {
+            throw new Error(message);
+        }
+    },
+
+    printSummary: function () {
+        console.log('\nTest Summary:');
+        console.log(`  Total Tests: ${this.testCount}`);
+        console.log(`  Passed: ${this.passCount}`);
+        console.log(`  Failed: ${this.failCount}`);
     },
 
     assertVisibility: function (elementId, isVisible, message) {
         const element = document.getElementById(elementId);
+        if (!element) {
+            console.error(`Element with ID '${elementId}' not found.`);
+            throw new Error(`Element not found: ${elementId}`);
+        }
         const displayStyle = getComputedStyle(element).display;
         const condition = isVisible ? (displayStyle !== 'none') : (displayStyle === 'none');
         if (!condition) {
             throw new Error(message);
         }
     },
-
-    // Define your test cases here
-    testStartScreenVisibility: function () {
-        this.assertVisibility('startScreen', true, 'Start screen should be visible on load');
-        // Simulate click or other actions to change state
-        // this.assertVisibility('otherDiv', false, 'Other Div should be hidden after action');
-    },
-
-    // Add more tests as needed
-
-    runAllTests: function () {
-        this.runTest('Start Screen Visibility', this.testStartScreenVisibility.bind(this));
-        // Add more test runs here
-    }
 };
 
-// Run the tests when the DOM is fully loaded
+// Define your test cases here
+function test_subtract(assert) {
+    // Example test case
+    const result = 5 - 3;
+    assert(result === 2, `Expected 2, got ${result}`);
+}
+
+function test_startScreenVisibility(assert) {
+    console.log('Testing start screen visibility...');
+    E2ETestFramework.assertVisibility('startScreen', true, 'Start screen should be visible on load');
+}
+
+window.testCases = {
+    test_subtract,
+    test_startScreenVisibility,
+    // Add more test cases here
+};
+
 document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    E2ETestFramework.runAllTests();
-  }, 1000); // Wait for 1 second before running tests to ensure DOM is fully loaded
+    setTimeout(() => {
+        E2ETestFramework.runTests(window.testCases);
+    }, 1000); // Delay to ensure DOM is fully loaded
 });
