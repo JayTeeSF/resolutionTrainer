@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>E2E Testing</title>
     <!-- Mustache.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/mustache@latest/mustache.min.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="test-container">
-        <!-- Production HTML will be rendered here -->
+      <!-- Production HTML will be rendered here -->
     </div>
 
     <script>
-        fetch('../index.html').then(response => response.text()).then(htmlContent => {
-            // Inject the fetched HTML content
-            document.getElementById('test-container').innerHTML = htmlContent;
+      fetch('../index.html')
+        .then(response => response.text())
+        .then(htmlContent => {
+          // Correct the relative paths for CSS and JS files
+          let correctedHtml = htmlContent.replace(/src="\.\.\//g, 'src="../');
+            correctedHtml = correctedHtml.replace(/href="\.\.\//g, 'href="../');
 
-            // Dynamically load the E2E test script
-            const e2eScript = document.createElement('script');
-            e2eScript.src = 'e2eTests.js';
-            document.body.appendChild(e2eScript);
-        });
+              document.getElementById('test-container').innerHTML = correctedHtml;
+
+              // Dynamically load the E2E test script
+              const e2eScript = document.createElement('script');
+              e2eScript.src = 'e2eTests.js';
+              document.body.appendChild(e2eScript);
+            });
     </script>
-</body>
+  </body>
 </html>
