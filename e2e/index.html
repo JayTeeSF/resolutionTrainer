@@ -14,17 +14,16 @@
       fetch('../index.html')
         .then(response => response.text())
         .then(htmlContent => {
-          // Adjust the paths to access resources from the 'src' directory
-          let correctedHtml = htmlContent.replace(/href="src\//g, 'href="../src/');
-            correctedHtml = correctedHtml.replace(/src="src\//g, 'src="../src/');
+          document.getElementById('test-container').innerHTML = htmlContent;
 
-              document.getElementById('test-container').innerHTML = correctedHtml;
-
-              // Dynamically load the E2E test script
-              const e2eScript = document.createElement('script');
-              e2eScript.src = 'e2eTests.js';
-              document.body.appendChild(e2eScript);
-            });
+          // Dynamically load the E2E test script
+          const e2eScript = document.createElement('script');
+          e2eScript.src = 'e2eTests.js';
+          document.body.appendChild(e2eScript);
+        })
+        .catch(error => {
+          console.error('Error loading index.html:', error);
+        });
     </script>
   </body>
 </html>
