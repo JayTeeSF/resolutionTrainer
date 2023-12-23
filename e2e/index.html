@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>E2E Testing</title>
+    <!-- Mustache.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mustache@latest/mustache.min.js"></script>
+</head>
+<body>
+    <div id="test-container">
+        <!-- Production HTML will be rendered here -->
+    </div>
+
+    <script>
+        // Fetch the production HTML content
+        fetch('../index.html').then(response => response.text()).then(htmlContent => {
+            // Define a Mustache template (placeholder for scripts)
+            const template = htmlContent.replace('</body>', '{{{e2eScripts}}}</body>');
+
+            // Render the production HTML with E2E test scripts injected
+            const renderedHtml = Mustache.render(template, {
+                e2eScripts: '<script src="e2eTests.js"></script>'
+            });
+
+            // Inject the rendered HTML into the test container
+            document.getElementById('test-container').innerHTML = renderedHtml;
+
+            // Optionally, initialize the test framework or scripts here
+        });
+    </script>
+
+    <!-- Include E2E Test Scripts -->
+    <script src="e2eTests.js"></script>
+</body>
+</html>
