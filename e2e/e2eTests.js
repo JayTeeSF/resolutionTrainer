@@ -67,7 +67,7 @@ function test_debugVisibility(assert) {
     assert(true, 'Just a debug test'); // This should always pass
 }
 
-window.testCases = {
+window.e2eTests = {
   test_subtract,
   test_startScreenVisibility,
   test_debugVisibility,
@@ -75,9 +75,10 @@ window.testCases = {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log("e2eTests.js domContentLoaded pre-timeout");
   setTimeout(() => {
-    console.log("e2eTests.js domcontentloaded and timeout done");
-    E2ETestFramework.runTests(window.testCases);
+    console.log("e2eTests.js domContentLoaded and timeout done");
+    E2ETestFramework.runTests(window.e2eTests);
   }, 1000); // Delay to ensure DOM is fully loaded
 });
-console.log("e2eTests.js loaded");
+console.log("e2eTests.js eof");
