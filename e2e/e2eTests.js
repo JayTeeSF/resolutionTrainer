@@ -67,10 +67,17 @@ function test_debugVisibility(assert) {
     assert(true, 'Just a debug test'); // This should always pass
 }
 
+function test_gameStateTransition(assert) {
+  changeGameState('personalLevel', 'communityLevel');
+  const isCommunityVisible = document.getElementById('communityLevel').classList.contains('visible');
+  assert(isCommunityVisible, 'Failed to transition from personal to community level');
+}
+
 window.testCases = {
   test_subtract,
   test_startScreenVisibility,
   test_debugVisibility,
+  test_gameStateTransition,
   // Add more test cases here
 };
 
