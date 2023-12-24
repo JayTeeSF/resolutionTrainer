@@ -61,9 +61,16 @@ function test_startScreenVisibility(assert) {
   E2ETestFramework.assertVisibility('startScreen', true, 'Start screen should be visible on load');
 }
 
+function test_debugVisibility(assert) {
+    console.log('Running debug visibility test...');
+    document.body.style.backgroundColor = 'pink'; // Should change the background color to pink
+    assert(true, 'Just a debug test'); // This should always pass
+}
+
 window.testCases = {
   test_subtract,
   test_startScreenVisibility,
+  test_debugVisibility,
   // Add more test cases here
 };
 
