@@ -74,6 +74,12 @@ window.e2eTests = {
   // Add more test cases here
 };
 
+window.onload = () => {
+  console.log("Window fully loaded, running E2E tests.");
+  E2ETestFramework.runTests(window.e2eTests);
+};
+
+/*
 document.addEventListener('DOMContentLoaded', () => {
   console.log("e2eTests.js domContentLoaded pre-timeout");
   setTimeout(() => {
@@ -81,4 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     E2ETestFramework.runTests(window.e2eTests);
   }, 1000); // Delay to ensure DOM is fully loaded
 });
+*/
+
 console.log("e2eTests.js eof");
